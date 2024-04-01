@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   containerSelected: {
-    justifyContent: 'flex-start',
+
     paddingTop: '20%',
   },
   input: {
