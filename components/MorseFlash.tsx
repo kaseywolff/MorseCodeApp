@@ -3,30 +3,36 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Camera } from 'expo-camera';
 import { toMorseCode } from '@/utils/MorseCode';
 
-function MorseFlash({ sentence }) {
-  const [torchOn, setTorchOn] = useState(false);
-  const [flashing, setFlashing] = useState(false);
-  const morseCode = toMorseCode(sentence);
+interface MorseFlashProps {
+  sentence: string;
+}
+
+const MorseFlash: React.FC<MorseFlashProps> = ({ sentence }) => {
+  const [torchOn, setTorchOn] = useState<boolean>(false);
+  const [flashing, setFlashing] = useState<boolean>(false);
+  const [interrupted, setInterrupted] = useState<boolean>(false);
+  const morseCode: string = toMorseCode(sentence);
 
   useEffect(() => {
     // Trigger flashing sequence when component mounts
-    if (torchOn && !flashing) {
+    if (torchOn && !flashing && !interrupted) {
       flashMorseCode();
     }
-  }, [torchOn, flashing]);
+  }, [torchOn, flashing, interrupted]);
 
   const flashMorseCode = async () => {
-    if (!torchOn || flashing) {
+    if (!torchOn || flashing || interrupted) {
       return;
     }
 
     setFlashing(true);
+    setInterrupted(false); // Reset interrupted state
 
     const morseCodeArray = morseCode.split('');
 
     for (let index = 0; index < morseCodeArray.length; index++) {
       const code = morseCodeArray[index];
-      let duration;
+      let duration: number;
 
       if (code === '.') {
         duration = 500; // Dot duration
@@ -40,6 +46,10 @@ function MorseFlash({ sentence }) {
         setTorchOn(true);
         await new Promise(resolve => setTimeout(() => {
           setTorchOn(false);
+          if (interrupted) {
+            setFlashing(false); // Stop flashing if user pressed 'Light' button again
+            return;
+          }
           resolve();
         }, duration));
       }
@@ -53,12 +63,14 @@ function MorseFlash({ sentence }) {
     setFlashing(false); // Set flashing to false after the entire sequence is flashed
   };
 
-
-
   const handlePress = () => {
     if (flashing) {
+      setInterrupted(true); // Set interrupted to true if flashing is stopped
       setFlashing(false);
       setTorchOn(false); // Turn off torch if flashing is stopped
+    } else if (interrupted) {
+      setInterrupted(false); // Reset interrupted state
+      setTorchOn(true); // Turn on torch if flashing was interrupted
     } else {
       setTorchOn(true); // Turn on torch if not already on
     }
@@ -79,6 +91,7 @@ function MorseFlash({ sentence }) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   // container: {
