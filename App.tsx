@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
-import MorseCodeTextConverter from './components/MorseCodeConverter';
+import MorseText from './components/MorseText';
+import MorseFlash from './components/MorseFlash';
 
 const App: React.FC = () => {
   const [sentence, setSentence] = useState<string>('');
   const [isInputSelected, setIsInputSelected] = useState(false);
 
   const handleInputFocus = () => {
-    console.log('focus')
     setIsInputSelected(true);
   };
-  console.log(isInputSelected)
 
   const handleInputBlur = () => {
     setIsInputSelected(false);
@@ -26,7 +25,8 @@ const App: React.FC = () => {
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
       />
-      <MorseCodeTextConverter sentence={sentence} />
+      <MorseText sentence={sentence} />
+      <MorseFlash sentence={sentence} />
     </View>
   );
 };
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   containerSelected: {
-
+    justifyContent: 'flex-start',
     paddingTop: '20%',
   },
   input: {

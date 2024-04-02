@@ -61,7 +61,7 @@ const morseCodeLib = {
 
 
 // function to convert sentence to morse code
-export const toMorseCodeText = (text) => {
+export const toMorseCode = (text) => {
   return text.toUpperCase().split('').map(char => morseCodeLib[char] || '').join(' ');
 };
 

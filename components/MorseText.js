@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { toMorseCodeText, getMorseCodeDetails } from '../utils/MorseCode';
+import { toMorseCode, getMorseCodeDetails } from '../utils/MorseCode';
 
 const MorseCodeTextConverter = ({ sentence }) => {
-  const morseCode = toMorseCodeText(sentence);
+  const morseCode = toMorseCode(sentence);
   const morseCodeDetails = getMorseCodeDetails(sentence);
 
   const [showDetails, setShowDetails] = useState(false);
@@ -34,7 +34,7 @@ const MorseCodeTextConverter = ({ sentence }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   label: {
     fontSize: 18,
