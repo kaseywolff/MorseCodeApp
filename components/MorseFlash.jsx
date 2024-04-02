@@ -81,10 +81,10 @@ function MorseFlash({ sentence }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
+  // container: {
+  //   flex: 1,
+  //   alignItems: 'center',
+  // },
   button: {
     backgroundColor: '#4CAF50',
     padding: 10,
@@ -95,15 +95,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   camera: {
-    width: 100,
-    height: 100,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    // width: 100,
+    // height: 100,
+    // position: 'absolute',
+    // top: 0,
+    // left: 0,
+    // right: 0,
+    // bottom: 0,
     opacity: 0, // make the camera transparent
-    zIndex: 999,
+    // zIndex: 999,
   },
 });
 
